@@ -1,0 +1,228 @@
+points:
+  zones:
+    #main keyboard matrix
+    matrix:
+      anchor:
+        shift: [125, -175]
+      key:
+        padding: u + 1
+        spread: u + 2
+      columns:
+        outer:
+          rows.bottom.skip: true
+          key.column_net: P113
+        pinky:
+          key.stagger: .7u
+          key.column_net: P111
+        ring:
+          key.stagger: 5
+          key.splay: -4
+          key.column_net: P010
+        middle:
+          key.stagger: 0.5u
+          key.splay: -4
+          key.column_net: P009
+        index:
+          key.stagger: -0.5u
+          key.column_net: P104
+        inner:
+          key.stagger: -.25u
+          key.column_net: P008
+      rows:
+        bottom:
+          row_net: P115
+        home:
+          row_net: P002
+        num:
+          row_net: P029
+        top:
+          row_net: P031
+    #thumb cluster
+    thumb:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-1.25u, -1u]
+      columns:
+        layer:
+          key.splay: -5
+          key.rotate: 180
+          key.column_net: P009
+          
+        layer2:
+          key.splay: -15
+          key.shift: [4, -2]
+          key.rotate: 180
+          key.column_net: P104
+          
+        space:
+          key.splay: -15
+          key.shift: [9, -3]
+          key.rotate: 180
+          key.column_net: P008
+      rows:
+        cluster:
+          row_net: P106
+  rotate: 7
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [u,u]
+  keys:
+    - what: rectangle
+      where: true
+      size: u-.5
+  board:
+    - what: polygon
+      operation: stack
+      points: 
+        - ref: matrix_outer_num
+          shift: [-.65u,1.65u]
+        - ref: matrix_outer_num
+          shift: [.5u,1.65u]
+
+        - ref: matrix_pinky_num
+          shift: [-.6u,1.65u]
+        - ref: matrix_pinky_num
+          shift: [.7u,1.65u]
+
+        - ref: matrix_ring_num
+          shift:  [-.55u,1.65u]
+        - ref: matrix_ring_num
+          shift: [.65u,1.65u]
+
+        - ref: matrix_middle_num
+          shift:  [-.6u,1.65u]
+        - ref: matrix_middle_num
+          shift: [.6u,1.65u]
+
+        - ref: matrix_index_num
+          shift:  [-.4u,1.65u]
+        - ref: matrix_index_num
+          shift: [.65u,1.65u]
+
+        - ref: matrix_inner_num
+          shift: [-.4u,1.65u]
+        - ref: matrix_inner_num
+          shift: [1.83u,1.65u]
+        
+        
+        - ref: thumb_space_cluster
+          shift: [-.65u,-.65u]
+        - ref: thumb_space_cluster
+          shift: [-.65u,.65u]
+
+        - ref: thumb_layer2_cluster
+          shift: [-.65u,.65u]
+        - ref: thumb_layer2_cluster
+          shift: [.5u,.65u]
+
+        - ref: thumb_layer_cluster
+          shift: [.65u,.65u]
+        - ref: thumb_layer_cluster
+          shift: [.65u,-.15u]
+
+        - ref: matrix_pinky_bottom
+          shift: [.65u,-.65u]
+        
+        - ref: matrix_outer_home
+          shift: [-.65u,-u]
+      fillet: 2
+  combo: 
+    - name: board
+    - operation: subtract
+      name: keys
+pcbs:
+  proto1:
+    outlines:
+      main:
+        outline: board
+    footprints:
+      mx_keys:
+        what: mx
+        where: true
+        params:
+          keycaps: true
+          reverse: true
+          hotswap: true 
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+      #diodes
+      diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust: 
+          shift: [0, -5]
+     #nice nano v2
+      microcontroller:
+        what: nice_nano
+        params:
+          orientation: "down"
+        where:
+          ref: matrix_inner_top
+          shift: [1.15u, -.5u]
+          rotate: -90
+      # screen
+      oled:
+        what: nice_view
+        params:
+          CS: P006
+          SDA: P100
+          SCL: P024
+        where:
+          ref: matrix_inner_top
+          shift: [1.15u, -1.5u]
+          rotate: 90
+      # battery power connector
+      battery_conn:
+        what: jstph
+        params:
+            pos: VCC
+            neg: GND
+        where:
+          ref: matrix_inner_home
+          shift: [u,.25u]
+          rotate: 90
+      # Mounting holes
+      holeOuterBottom: 
+        what: hole_m2
+        where:
+          ref: matrix_outer_home
+          shift: [0, -.75u]
+      holeMiddleBottom: 
+        what: hole_m2
+        where:
+          ref: matrix_middle_bottom
+          shift: [0, -.75u]
+      holeInnerBottom: 
+        what: hole_m2
+        where:
+          ref: matrix_inner_bottom
+          shift: [1.15u, -.5u]
+      holeInnerTop: 
+        what: hole_m2
+        where:
+          ref: matrix_inner_top
+          shift: [-.55u, -8]
+      holePinkyTop: 
+        what: hole_m2
+        where:
+          ref: matrix_pinky_top
+          shift: [.65u, 5]
+cases:
+  bottom:
+    - name: board
+      extrude: 1         
+
+      
+
+
+
+  
+
+
+
+
